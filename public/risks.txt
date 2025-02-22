@@ -1,0 +1,122 @@
+Risk Disclosure - Rigen Protocol
+
+Last Updated: February 2024
+
+Please carefully read and understand the following risks before using the Rigen Protocol:
+
+1. Smart Contract Risks
+
+1.1. Code Vulnerabilities
+- Smart contracts may contain bugs or vulnerabilities
+- Exploits could result in loss of funds
+- Audits do not guarantee complete security
+
+1.2. Upgrade Risks
+- Protocol upgrades may introduce new vulnerabilities
+- Upgrades could temporarily disrupt services
+- Migration periods may affect asset availability
+
+2. Financial Risks
+
+2.1. Market Volatility
+- Cryptocurrency prices are highly volatile
+- Sudden price changes can trigger liquidations
+- Interest rates fluctuate based on market conditions
+
+2.2. Liquidation Risks
+- Positions may be liquidated if collateral ratio falls below threshold
+- Liquidations can occur without warning
+- Market volatility may prevent timely position adjustments
+
+2.3. Impermanent Loss
+- Providing liquidity may result in impermanent loss
+- Value of deposited assets may change relative to each other
+- Returns may not compensate for impermanent loss
+
+3. Technical Risks
+
+3.1. Blockchain Risks
+- Network congestion may delay transactions
+- High gas fees during peak periods
+- Chain reorganizations could affect transactions
+
+3.2. Oracle Risks
+- Price feeds may be delayed or inaccurate
+- Oracle manipulation could affect protocol operations
+- Technical issues could impact price accuracy
+
+4. Regulatory Risks
+
+4.1. Compliance
+- Regulations vary by jurisdiction
+- Future regulations may impact protocol operations
+- Compliance requirements may change
+
+4.2. Legal Status
+- DeFi protocols operate in a regulatory grey area
+- Legal status of tokens may change
+- Tax implications vary by jurisdiction
+
+5. Operational Risks
+
+5.1. User Error
+- Incorrect transaction details can result in losses
+- Lost private keys cannot be recovered
+- Interface errors may affect user experience
+
+5.2. Protocol Parameters
+- Interest rates are variable
+- Collateral requirements may change
+- Protocol parameters may be adjusted through governance
+
+6. Market Risks
+
+6.1. Liquidity Risks
+- Asset liquidity may vary
+- Large transactions may affect prices
+- Emergency withdrawals may be delayed
+
+6.2. Asset-Specific Risks
+- Different assets have different risk profiles
+- New assets may introduce additional risks
+- Asset bridges may have security vulnerabilities
+
+7. External Risks
+
+7.1. Third-Party Dependencies
+- Integration with other protocols carries risks
+- Third-party services may fail
+- External contracts may affect protocol operation
+
+7.2. Economic Conditions
+- Market conditions affect protocol performance
+- Economic events may impact asset values
+- Systemic risks in crypto markets
+
+8. Risk Mitigation
+
+While we implement various security measures:
+- Use the protocol at your own risk
+- Only invest what you can afford to lose
+- Regularly monitor your positions
+- Maintain safe collateral ratios
+- Keep private keys secure
+
+9. Emergency Procedures
+
+In case of emergencies:
+- Protocol may be paused
+- Withdrawals may be temporarily suspended
+- Emergency governance actions may be taken
+
+10. Acknowledgment
+
+By using the Rigen Protocol, you acknowledge:
+- You understand and accept these risks
+- You are capable of evaluating and bearing these risks
+- You will not hold the protocol or its developers liable for losses
+
+For the latest risk updates and security measures, follow our official channels:
+- Discord: [Rigen Discord Server]
+- Twitter: [@RigenProtocol]
+- Website: Rigen.protocol 

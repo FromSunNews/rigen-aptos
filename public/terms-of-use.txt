@@ -1,0 +1,97 @@
+Terms of Use - Rigen Protocol
+
+Last Updated: February 2024
+
+1. Acceptance of Terms
+
+By accessing and using the Rigen Protocol ("Protocol"), you agree to be bound by these Terms of Use. If you do not agree to these terms, please do not use the Protocol.
+
+2. Protocol Overview
+
+Rigen is a decentralized lending protocol built on the Aptos blockchain that enables users to:
+- Supply crypto assets as collateral
+- Borrow assets against supplied collateral
+- Earn interest on supplied assets
+- Participate in liquidity mining programs
+
+3. User Responsibilities
+
+3.1. Account Security
+- You are responsible for maintaining the security of your wallet
+- Never share your private keys or seed phrases
+- Use secure internet connections when interacting with the Protocol
+
+3.2. Risk Acknowledgment
+- You understand and accept the risks associated with DeFi protocols
+- You acknowledge that smart contracts may contain bugs or vulnerabilities
+- You accept that cryptocurrency prices are highly volatile
+
+4. Protocol Usage
+
+4.1. Eligibility
+- You must be at least 18 years old
+- You must not be a resident of restricted jurisdictions
+- You must comply with all applicable laws and regulations
+
+4.2. Prohibited Activities
+- Attempting to exploit Protocol vulnerabilities
+- Using the Protocol for illegal activities
+- Interfering with Protocol operations
+
+5. Asset Management
+
+5.1. Deposits
+- Assets deposited are managed by smart contracts
+- Interest rates are determined algorithmically
+- Deposits may be used as collateral for borrowing
+
+5.2. Borrowing
+- Borrowing requires sufficient collateral
+- Liquidation may occur if collateral ratio falls below required levels
+- Interest rates are variable and subject to market conditions
+
+6. Protocol Governance
+
+6.1. Updates
+- Protocol parameters may be updated through governance
+- Smart contracts may be upgraded
+- Users will be notified of significant changes
+
+7. Disclaimers
+
+7.1. No Guarantees
+- Protocol performance is not guaranteed
+- Interest rates may fluctuate
+- Asset availability is subject to market conditions
+
+7.2. Service Availability
+- The Protocol may experience downtime
+- Access may be restricted in certain jurisdictions
+- Features may be modified or removed
+
+8. Limitation of Liability
+
+The Protocol and its developers:
+- Are not liable for financial losses
+- Do not guarantee the accuracy of displayed information
+- Are not responsible for third-party services
+
+9. Privacy and Data
+
+9.1. Information Collection
+- Blockchain transactions are public
+- Wallet addresses are visible on-chain
+- Usage analytics may be collected
+
+10. Changes to Terms
+
+We reserve the right to modify these terms at any time. Users will be notified of significant changes.
+
+11. Contact
+
+For questions about these terms, please contact:
+- Discord: [Rigen Discord Server]
+- Twitter: [@RigenProtocol]
+- Email: support@Rigen.protocol
+
+By using the Protocol, you acknowledge that you have read, understood, and agree to these Terms of Use. 
