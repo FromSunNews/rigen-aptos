@@ -3,10 +3,10 @@
 import { FourCornerPlusIcon } from "@/components/shared/custom/plus-icon/partial-plus-icon";
 import { LeftSection } from "./left-section";
 import { RightSection } from "./right-section";
-import { farmingDetailSelector } from "@/store/selectors/farming-detail.selector";
+import { useFarmingPoolSelector } from "@/store/selectors/farming-detail.selector";
 
 export const PoolInfo = () => {
-  const { poolSelected } = farmingDetailSelector();
+  const { poolSelected } = useFarmingPoolSelector();
   // if (isLoading) {
   //   return <PoolInfoSkeleton />;
   // }

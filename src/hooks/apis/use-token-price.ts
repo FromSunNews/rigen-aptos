@@ -26,9 +26,7 @@ export function useTokenPrice(symbol: string) {
 
 // Hook for multiple tokens
 export function useMultipleTokenPrices(symbols: string[]) {
-  const tokenIds = symbols.map(
-    (symbol) => tokenSymbolToId[symbol.toUpperCase()] || symbol.toLowerCase()
-  );
+  const tokenIds = symbols.map((symbol) => tokenSymbolToId[symbol.toUpperCase()] || symbol.toLowerCase());
 
   return useQuery({
     queryKey: ["tokenPrices", tokenIds],

@@ -8,16 +8,16 @@ import { Metadata, Viewport } from "next";
 
 // Add Inter font configuration
 const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter',
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
 });
 
 // Or use Outfit for more modern look
 const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-outfit',
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-outfit",
 });
 
 // Google Font
@@ -90,8 +90,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body 
-        className={`${mono_dm.variable} ${outfit.variable} fcol relative min-h-screen antialiased`} 
+      <body
+        className={`${mono_dm.variable} ${outfit.variable} fcol relative min-h-screen antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">

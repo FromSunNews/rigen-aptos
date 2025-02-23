@@ -50,7 +50,6 @@ export interface PoolCalculation {
   selectedToken: string;
 }
 
-
 export interface FarmingPoolSlice {
   farmingPoolState: FarmingPoolState;
 }

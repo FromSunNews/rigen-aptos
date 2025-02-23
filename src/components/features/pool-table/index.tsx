@@ -5,19 +5,19 @@ import { useEffect } from "react";
 import { DataTable } from "@/components/shared/custom/data-table";
 import { Table as ITable } from "@tanstack/react-table";
 import HeaderTableCustom from "./header";
-import { farmingPoolSelector } from "@/store/selectors/farming-pool.selector";
+import { useFarmingPoolSelector } from "@/store/selectors/farming-pool.selector";
 import { FarmingPoolUI } from "@/store/types/farming-pool.type";
 
 export default function PoolTablePage() {
-  const { 
-    filteredPools, 
-    isLoading, 
-    fetchPoolData, 
+  const {
+    filteredPools,
+    isLoading,
+    fetchPoolData,
     filterByPlatform,
     startTVLUpdates,
     platformSelected,
-    updatePlatformSelected
-  } = farmingPoolSelector();
+    updatePlatformSelected,
+  } = useFarmingPoolSelector();
 
   useEffect(() => {
     // Fetch pool data when component mounts
@@ -25,12 +25,12 @@ export default function PoolTablePage() {
     // Start TVL updates
     const cleanup = startTVLUpdates();
     return () => cleanup();
-  }, []);
+  }, [fetchPoolData, startTVLUpdates]);
 
   const handlePlatformChange = (value: string) => {
     updatePlatformSelected(value);
     filterByPlatform(value);
-  }
+  };
 
   return (
     <DataTable

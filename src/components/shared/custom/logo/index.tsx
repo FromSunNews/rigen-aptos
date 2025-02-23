@@ -6,16 +6,16 @@ export function Logo() {
   const isMobile = useMobile();
 
   return (
-    <Link href="/" className="frow relative justify-start items-center gap-4">
+    <Link href="/" className="frow relative items-center justify-start gap-4">
       {isMobile ? (
         <>
           <Image src="/logo/rigen-shortcut.png" alt="rigen logo" width={35} height={35} />
-          <span className="font-semibold text-2xl tracking-[0.2em]">RIGEN</span>
+          <span className="text-2xl font-semibold tracking-[0.2em]">RIGEN</span>
         </>
       ) : (
         <>
           <Image src="/logo/rigen.png" alt="rigen logo" width={35} height={35} className="object-contain" />
-          <span className="font-semibold text-2xl tracking-[0.2em]">RIGEN</span>
+          <span className="text-2xl font-semibold tracking-[0.2em]">RIGEN</span>
         </>
       )}
     </Link>

@@ -1,18 +1,18 @@
-import { useBoundStore } from '@/store'
-import { FarmingPoolSlice } from '@/store/types/farming-pool.type'
+import { useBoundStore } from "@/store";
+import { FarmingPoolSlice } from "@/store/types/farming-pool.type";
 
-export const farmingPoolSelector = () => {
-  const { 
-    filteredPools, 
-    isLoading, 
-    fetchPoolData, 
+export const useFarmingPoolSelector = () => {
+  const {
+    filteredPools,
+    isLoading,
+    fetchPoolData,
     filterByPlatform,
     startTVLUpdates,
     updatePlatformSelected,
     platformSelected,
     updateLeverage,
-    updateBorrowTokens
-  } = useBoundStore((state: FarmingPoolSlice) => state.farmingPoolState)
+    updateBorrowTokens,
+  } = useBoundStore((state: FarmingPoolSlice) => state.farmingPoolState);
 
   return {
     filteredPools,
@@ -23,6 +23,6 @@ export const farmingPoolSelector = () => {
     updatePlatformSelected,
     platformSelected,
     updateLeverage,
-    updateBorrowTokens
-  }
-}
+    updateBorrowTokens,
+  };
+};

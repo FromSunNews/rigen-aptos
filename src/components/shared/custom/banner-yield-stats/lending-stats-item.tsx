@@ -14,7 +14,7 @@ export default function LendingStatsItem({ apy, platform, tokens }: LendingStat)
   const isMobile = useMobile();
   const navigate = useRouter();
   const { connected } = useWallet();
-  const {openWalletModal} = useBoundStore();
+  const { openWalletModal } = useBoundStore();
 
   const handleFarm = () => {
     if (!connected) {
@@ -58,11 +58,7 @@ export default function LendingStatsItem({ apy, platform, tokens }: LendingStat)
             </div>
 
             <div className="absolute left-4 hidden opacity-0 transition-all duration-300 group-hover:opacity-100 md:block">
-              <Button
-                size="sm"
-                className="whitespace-nowrap px-6"
-                onClick={handleFarm}
-              >
+              <Button size="sm" className="whitespace-nowrap px-6" onClick={handleFarm}>
                 Farm
               </Button>
             </div>

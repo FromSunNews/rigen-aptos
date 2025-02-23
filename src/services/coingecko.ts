@@ -40,11 +40,14 @@ export const coingeckoService = {
           vs_currencies: "usd",
         },
       });
-      
-      return tokenIds.reduce((acc, tokenId) => {
-        acc[tokenId] = response.data[tokenId]?.usd || 0;
-        return acc;
-      }, {} as Record<string, number>);
+
+      return tokenIds.reduce(
+        (acc, tokenId) => {
+          acc[tokenId] = response.data[tokenId]?.usd || 0;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
     } catch (error) {
       console.error("Error fetching multiple token prices:", error);
       return {};

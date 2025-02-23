@@ -2,7 +2,6 @@
 
 import { Typography } from "@/components/shared/ui/typography";
 import { Row } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
 import PairToken from "@/components/shared/custom/pair-token";
 import { Badge } from "@/components/shared/ui/badge";
 import { TokenIcon } from "@/components/shared/custom/token-icon";

@@ -47,7 +47,7 @@ const TabsList = React.forwardRef<
     >
       {activeRect && (
         <motion.div
-          className="absolute inset-0 h-9 top-1.5 rounded-full bg-[hsl(var(--third))]"
+          className="absolute inset-0 top-1.5 h-9 rounded-full bg-[hsl(var(--third))]"
           initial={false}
           animate={{
             width: activeRect.width,
@@ -60,9 +60,7 @@ const TabsList = React.forwardRef<
           }}
         />
       )}
-      <div className="relative z-10 flex h-full items-center justify-center gap-1">
-        {props.children}
-      </div>
+      <div className="relative z-10 flex h-full items-center justify-center gap-1">{props.children}</div>
     </TabsPrimitive.List>
   );
 });

@@ -21,7 +21,7 @@ interface FarmingPositionTablePageProps {
 export default function FarmingPositionTablePage({ data }: FarmingPositionTablePageProps) {
   const { connected } = useWallet();
   const isLoading = false;
-  
+
   const [currentTab, setCurrentTab] = useState<TabType>("My position");
 
   // Map data and columns by tab

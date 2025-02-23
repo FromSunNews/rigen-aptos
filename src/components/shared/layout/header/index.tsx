@@ -19,31 +19,32 @@ export function Header() {
   const pathname = usePathname();
   const isMobile = useMobile();
 
-  const getCurrentTab = () => {
+  const getCurrentTab = React.useCallback(() => {
     if (pathname === "/") {
       return mainMenuItems[0].path;
     }
-    const currentPath = mainMenuItems.find(item => 
-      pathname.startsWith(item.path)
-    );
+    const currentPath = mainMenuItems.find((item) => pathname.startsWith(item.path));
     return currentPath?.path || mainMenuItems[0].path;
-  };
+  }, [pathname]);
 
   const [activeTab, setActiveTab] = React.useState(() => getCurrentTab());
 
-  const handleNavigation = (path: string) => {
-    if (path !== activeTab) {
-      setActiveTab(path);
-      router.push(path);
-    }
-  };
+  const handleNavigation = React.useCallback(
+    (path: string) => {
+      if (path !== activeTab) {
+        setActiveTab(path);
+        router.push(path);
+      }
+    },
+    [activeTab, router]
+  );
 
   React.useEffect(() => {
     const newTab = getCurrentTab();
     if (newTab !== activeTab) {
       setActiveTab(newTab);
     }
-  }, [pathname, activeTab]);
+  }, [pathname, activeTab, getCurrentTab]);
 
   if (isMobile) {
     return <MobileHeader />;
@@ -69,23 +70,19 @@ export function Header() {
         <div className="absolute inset-0 bg-[#0E0C15]/10 backdrop-blur-md backdrop-saturate-150" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5" />
       </div>
-      
+
       <nav className="frow h-[var(--header-height)] w-full items-center justify-between border-b border-white/[0.02] px-2 md:px-10">
         {/* Logo with animation */}
-        <motion.div 
-          className="f gap-2" 
-          whileHover={{ scale: 1.05 }} 
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div className="f gap-2" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Logo />
         </motion.div>
 
         {/* Desktop Menu using Tabs */}
         <div className="hidden items-center md:flex">
-          <Tabs 
+          <Tabs
             value={activeTab}
             defaultValue={mainMenuItems[0].path}
-            onValueChange={handleNavigation} 
+            onValueChange={handleNavigation}
             className="w-fit"
           >
             <TabsList className="relative">

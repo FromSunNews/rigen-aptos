@@ -4,12 +4,10 @@ import { Button } from "@/components/shared/ui/button";
 import { TokenOption } from "@/components/features/pool-table/types";
 import { Row } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
 import { useBoundStore } from "@/store";
 import { cn } from "@/libs/utils/taildwind";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { FarmingPoolUI } from "@/store/types/farming-pool.type";
-import { farmingDetailSelector } from "@/store/selectors/farming-detail.selector";
 
 // Farm Button
 export const FarmButton = ({
@@ -25,7 +23,7 @@ export const FarmButton = ({
   const router = useRouter();
   const pool = row.original;
   const { openWalletModal } = useBoundStore();
-  // const { setPoolSelected } = farmingDetailSelector();
+  // const { setPoolSelected } = useFarmingPoolSelector();
   const setPoolSelected = useBoundStore((state) => state.farmingDetailState.setPoolSelected);
 
   const handleFarmClick = () => {
@@ -43,12 +41,7 @@ export const FarmButton = ({
   };
 
   return (
-    <Button
-      variant="secondary"
-      className={cn("px-6 py-2", className)}
-      animationHover={true}
-      onClick={handleFarmClick}
-    >
+    <Button variant="secondary" className={cn("px-6 py-2", className)} animationHover={true} onClick={handleFarmClick}>
       Farm
     </Button>
   );

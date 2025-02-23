@@ -43,7 +43,8 @@ export const columnsPoolTable: ColumnDef<FarmingPoolUI>[] = [
   {
     accessorKey: "apy",
     header: "APY",
-    sortingFn: (a: Row<FarmingPoolUI>, b: Row<FarmingPoolUI>) => Number(a.original.apy.max) - Number(b.original.apy.max),
+    sortingFn: (a: Row<FarmingPoolUI>, b: Row<FarmingPoolUI>) =>
+      Number(a.original.apy.max) - Number(b.original.apy.max),
     cell: ({ row }: { row: Row<FarmingPoolUI> }) => {
       const { min, max } = row.original.apy;
       return (
@@ -69,7 +70,8 @@ export const columnsPoolTable: ColumnDef<FarmingPoolUI>[] = [
   {
     accessorKey: "apr",
     header: "APR",
-    sortingFn: (a: Row<FarmingPoolUI>, b: Row<FarmingPoolUI>) => Number(a.original.apr.total) - Number(b.original.apr.total),
+    sortingFn: (a: Row<FarmingPoolUI>, b: Row<FarmingPoolUI>) =>
+      Number(a.original.apr.total) - Number(b.original.apr.total),
     cell: ({ row }: { row: Row<FarmingPoolUI> }) => <AprSection row={row} />,
     meta: {
       isHiddenMobile: true,
@@ -115,7 +117,7 @@ export const columnsPoolTable: ColumnDef<FarmingPoolUI>[] = [
     header: "Leverage",
     cell: ({ row }: { row: Row<FarmingPoolUI> }) => (
       <div className="flex w-full justify-center">
-        <LeverageButton row={row}/>
+        <LeverageButton row={row} />
       </div>
     ),
     meta: {
@@ -142,7 +144,7 @@ export const columnsPoolTable: ColumnDef<FarmingPoolUI>[] = [
         <div className="flex w-full">
           <FarmButton className="w-full" row={row} selectedToken={(row as any).selectedToken} />
         </div>
-      )
+      ),
     },
   },
   // column hidden for search

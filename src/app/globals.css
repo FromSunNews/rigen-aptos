@@ -5,51 +5,42 @@
 @layer base {
   :root {
     /* Colors */
-    --background: 222 47% 11%;    /* Dark blue background */
-    --foreground: 0 0% 100%;      /* White text */
-    --card: 217 47% 15%;          /* Card background */
+    --background: 222 47% 11%; /* Dark blue background */
+    --foreground: 0 0% 100%; /* White text */
+    --card: 217 47% 15%; /* Card background */
     --card-foreground: 0 0% 100%;
     --popover: 217 47% 11%;
     --popover-foreground: 0 0% 100%;
-    
+
     /* Main brand colors */
-    --primary: 262 100% 73%;      /* Purple */
+    --primary: 262 100% 73%; /* Purple */
     --primary-foreground: 0 0% 100%;
-    --secondary: 199 98% 48%;     /* Bright blue */
+    --secondary: 199 98% 48%; /* Bright blue */
     --secondary-foreground: 0 0% 100%;
-    
+
     /* UI Elements */
     --muted: 217 38% 15%;
     --muted-foreground: 215 8% 70%;
-    --accent: 262 100% 73%;       /* Purple accent */
+    --accent: 262 100% 73%; /* Purple accent */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 217 47% 15%;
     --input: 217 47% 15%;
-    --ring: 262 100% 73%;         /* Purple ring */
+    --ring: 262 100% 73%; /* Purple ring */
     --radius: 1rem;
 
     /* Gradient backgrounds */
-    --background-gradient: linear-gradient(
-      135deg,
-      hsl(217 47% 15%) 0%,
-      hsl(222 47% 11%) 50%,
-      hsl(230 47% 15%) 100%
-    );
+    --background-gradient: linear-gradient(135deg, hsl(217 47% 15%) 0%, hsl(222 47% 11%) 50%, hsl(230 47% 15%) 100%);
 
     /* Card gradient */
-    --card-gradient: linear-gradient(
-      160deg,
-      hsla(217, 47%, 15%, 0.9) 0%,
-      hsla(222, 47%, 11%, 0.8) 100%
-    );
+    --card-gradient: linear-gradient(160deg, hsla(217, 47%, 15%, 0.9) 0%, hsla(222, 47%, 11%, 0.8) 100%);
 
     /* Button gradient */
     --button-gradient: linear-gradient(
       90deg,
-      hsl(262 100% 73%) 0%,      /* Purple */
-      hsl(199 98% 48%) 100%      /* Bright blue */
+      hsl(262 100% 73%) 0%,
+      /* Purple */ hsl(199 98% 48%) 100% /* Bright blue */
     );
 
     /* height of notify header */
@@ -60,12 +51,12 @@
     --main-content-mt: calc(var(--header-height) + var(--notify-height));
 
     /* Tab colors */
-    --third: 199 98% 48%;        /* Light blue for active tab */
-    --tab-bg: 222 47% 11%;        /* Darker background */
-    --tab-hover: 217 47% 20%;       /* Hover state */
-    --tab-active: 262 100% 73%;     /* Active indicator */
-    --tab-active-text: 0 0% 100%;   /* Active text color */
-    --primary: 262 100% 73%;      /* Purple for active indicator */
+    --third: 199 98% 48%; /* Light blue for active tab */
+    --tab-bg: 222 47% 11%; /* Darker background */
+    --tab-hover: 217 47% 20%; /* Hover state */
+    --tab-active: 262 100% 73%; /* Active indicator */
+    --tab-active-text: 0 0% 100%; /* Active text color */
+    --primary: 262 100% 73%; /* Purple for active indicator */
   }
 
   .dark {
@@ -110,7 +101,7 @@
   body {
     @apply text-foreground;
     background-color: hsl(264, 71%, 1%);
-    background-image: url('/background/background.jpg');
+    background-image: url("/background/background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

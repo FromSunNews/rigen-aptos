@@ -19,10 +19,10 @@ import { useBoundStore } from "@/store";
 
 export const AprSection = ({ row }: { row: Row<FarmingPoolUI> }) => {
   const isMobile = useMobile();
-  const updateBorrowTokens = useBoundStore(state => state.farmingPoolState.updateBorrowTokens);
+  const updateBorrowTokens = useBoundStore((state) => state.farmingPoolState.updateBorrowTokens);
 
   return (
-    <div className={cn("fcol-jcenter items-end gap-1 w-[300px]", isMobile && "my-2 rounded-xl bg-third p-2 w-auto")}>
+    <div className={cn("fcol-jcenter w-[300px] items-end gap-1", isMobile && "my-2 w-auto rounded-xl bg-third p-2")}>
       {/* APR Breakdown */}
       <div className="fcol h-16 w-full gap-1 border-b border-white/20 pb-1">
         {/* Yield Farming */}
@@ -61,10 +61,7 @@ export const AprSection = ({ row }: { row: Row<FarmingPoolUI> }) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {row.original.borrowTokens.options.map((token) => (
-                  <DropdownMenuItem 
-                    key={token} 
-                    onSelect={() => updateBorrowTokens(token, row.original.id)}
-                  >
+                  <DropdownMenuItem key={token} onSelect={() => updateBorrowTokens(token, row.original.id)}>
                     <div className="frow-icenter gap-2">
                       <TokenIcon symbol={token} size={16} />
                       <span>{token.toUpperCase()}</span>
@@ -75,7 +72,13 @@ export const AprSection = ({ row }: { row: Row<FarmingPoolUI> }) => {
             </DropdownMenu>
           </div>
           <Typography variant="small" className="text-right">
-            <CountUp end={row.original.apr.borrowingInterest} decimals={2} duration={2} suffix="%" preserveValue={true} />
+            <CountUp
+              end={row.original.apr.borrowingInterest}
+              decimals={2}
+              duration={2}
+              suffix="%"
+              preserveValue={true}
+            />
           </Typography>
         </div>
       </div>

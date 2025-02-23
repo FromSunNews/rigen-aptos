@@ -13,8 +13,8 @@ export default function FarmingStatsItem({ apy, balance, symbol }: FarmingStat) 
   const isMobile = useMobile();
   const navigate = useRouter();
   const { connected } = useWallet();
-  const {openWalletModal} = useBoundStore();
-  
+  const { openWalletModal } = useBoundStore();
+
   const handleFarm = () => {
     if (!connected) {
       openWalletModal();

@@ -4,7 +4,7 @@ import { Button } from "../../ui/button";
 import { Typography } from "../../ui/typography";
 import React from "react";
 import { useMobile } from "@/hooks/shared/use-mobile";
-import { farmingPoolSelector } from "@/store/selectors/farming-pool.selector";
+import { useFarmingPoolSelector } from "@/store/selectors/farming-pool.selector";
 import { FarmingPoolUI } from "@/store/types/farming-pool.type";
 
 export default function LeverageButton({ row }: { row: Row<FarmingPoolUI> }) {
@@ -13,7 +13,7 @@ export default function LeverageButton({ row }: { row: Row<FarmingPoolUI> }) {
   const maxLeverage = row.original.leverage.max;
   const selectedLeverage = row.original.leverage.selected;
   const step = 0.5;
-  const { updateLeverage } = farmingPoolSelector();
+  const { updateLeverage } = useFarmingPoolSelector();
 
   const increment = () => {
     if (selectedLeverage < maxLeverage) {
@@ -34,10 +34,22 @@ export default function LeverageButton({ row }: { row: Row<FarmingPoolUI> }) {
       <div className="frow-center gap-2 rounded-full border border-ring/40 px-4 py-1">
         <Typography className="text-center">{selectedLeverage.toFixed(1)}x</Typography>
         <div className="fcol-center gap-1">
-          <Button variant="none" size="icon" onClick={increment} disabled={selectedLeverage >= maxLeverage} className="h-3 w-3 p-0">
+          <Button
+            variant="none"
+            size="icon"
+            onClick={increment}
+            disabled={selectedLeverage >= maxLeverage}
+            className="h-3 w-3 p-0"
+          >
             <ChevronUpIcon />
           </Button>
-          <Button variant="none" size="icon" onClick={decrement} disabled={selectedLeverage <= minLeverage} className="h-3 w-3 p-0">
+          <Button
+            variant="none"
+            size="icon"
+            onClick={decrement}
+            disabled={selectedLeverage <= minLeverage}
+            className="h-3 w-3 p-0"
+          >
             <ChevronDownIcon />
           </Button>
         </div>

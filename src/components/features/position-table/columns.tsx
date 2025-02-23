@@ -6,7 +6,6 @@ import { Typography } from "@/components/shared/ui/typography";
 import { Skeleton } from "@/components/shared/ui/skeleton";
 import { TokenIcon } from "@/components/shared/custom/token-icon";
 import { UIPostionReserveData } from "@/clients/types/view/pool/position";
-import { Button } from "@/components/shared/ui/button";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import DepositDialog from "./dialog";
 
