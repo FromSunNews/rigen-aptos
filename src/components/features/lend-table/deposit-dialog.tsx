@@ -150,8 +150,10 @@ export default function DepositDialog({ row }: { row: Row<UILendingReserveData> 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary" animationHover={true}>
-          Deposit
+        <Button className="!h-[48px] w-full">
+          <Typography variant="h2" className="text-base font-bold uppercase">
+            Deposit
+          </Typography>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[465px]">

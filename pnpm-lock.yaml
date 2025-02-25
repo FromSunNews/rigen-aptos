@@ -82,6 +82,9 @@ importers:
       "@tanstack/react-table":
         specifier: ^8.20.6
         version: 8.20.6(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+      "@types/lodash":
+        specifier: ^4.17.15
+        version: 4.17.15
       bignumber.js:
         specifier: ^9.1.2
         version: 9.1.2
@@ -1591,6 +1594,10 @@ packages:
   "@types/keyv@3.1.4":
     resolution:
       { integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg== }
+
+  "@types/lodash@4.17.15":
+    resolution:
+      { integrity: sha512-w/P33JFeySuhN6JLkysYUK2gEmy9kHHFN7E8ro0tkfmlDOgxBDzWEZ/J8cWA+fHqFevpswDTFZnDx+R9lbL6xw== }
 
   "@types/node@20.17.16":
     resolution:
@@ -5982,6 +5989,8 @@ snapshots:
   "@types/keyv@3.1.4":
     dependencies:
       "@types/node": 20.17.16
+
+  "@types/lodash@4.17.15": {}
 
   "@types/node@20.17.16":
     dependencies:

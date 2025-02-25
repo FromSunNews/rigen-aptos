@@ -41,7 +41,7 @@ export const FarmButton = ({
   };
 
   return (
-    <Button variant="secondary" className={cn("px-6 py-2", className)} animationHover={true} onClick={handleFarmClick}>
+    <Button variant="secondary" className={cn("px-6 py-2", className)} onClick={handleFarmClick}>
       Farm
     </Button>
   );

@@ -5,9 +5,9 @@ export const mainMenuItems = [
     description: "Lend your assets and earn interest",
   },
   {
-    title: "Farming",
-    path: "/farming",
-    description: "Stake your tokens to earn rewards",
+    title: "Borrowing",
+    path: "/borrowing",
+    description: "Borrow assets and earn interest",
   },
   {
     title: "Multiply",

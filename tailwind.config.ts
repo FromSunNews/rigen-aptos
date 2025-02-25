@@ -109,9 +109,24 @@ export default {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(0)" },
         },
+        shine: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
+        ripple: {
+          "0%": { transform: "scale(0)", opacity: "0.5" },
+          "100%": { transform: "scale(1)", opacity: "0" },
+        },
       },
       animation: {
         slideDown: "slideDown 0.3s ease-out",
+        shine: "shine 0.85s ease-in-out",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        ripple: "ripple 0.6s linear forwards",
       },
     },
   },

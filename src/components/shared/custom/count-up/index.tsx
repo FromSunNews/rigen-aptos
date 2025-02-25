@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Typography } from "../../ui/typography";
+import { cn } from "@/libs/utils/taildwind";
 
 const CountUpLib = dynamic(() => import("react-countup"), {
   ssr: false,
@@ -14,20 +14,20 @@ interface CountUpProps {
   prefix?: string;
   duration?: number;
   decimals?: number;
-  color?: any;
   className?: string;
-  variant?: any;
+  enableScrollSpy?: boolean;
+  scrollSpyDelay?: number;
 }
 
 export default function CountUp({
   value,
   suffix = "",
-  prefix = "",
-  duration = 1,
-  decimals = 2,
-  color,
+  prefix = "$",
+  duration = 2.5,
+  decimals = 0,
   className = "",
-  variant = "default",
+  enableScrollSpy = true,
+  scrollSpyDelay = 0,
 }: CountUpProps) {
   const [isClient, setIsClient] = useState(false);
 
@@ -37,17 +37,29 @@ export default function CountUp({
 
   if (!isClient) {
     return (
-      <Typography variant={variant} color={color} className={className}>
+      <span className={cn("font-bold", className)}>
         {prefix}
-        {value.toFixed(decimals)}
+        {value.toLocaleString("en-US", {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        })}
         {suffix}
-      </Typography>
+      </span>
     );
   }
 
   return (
-    <Typography variant={variant} color={color} className={className}>
-      <CountUpLib end={value} duration={duration} decimals={decimals} separator="," prefix={prefix} suffix={suffix} />
-    </Typography>
+    <span className={cn("font-bold", className)}>
+      <CountUpLib
+        end={value}
+        duration={duration}
+        decimals={decimals}
+        separator=","
+        prefix={prefix}
+        suffix={suffix}
+        enableScrollSpy={enableScrollSpy}
+        scrollSpyDelay={scrollSpyDelay}
+      />
+    </span>
   );
 }

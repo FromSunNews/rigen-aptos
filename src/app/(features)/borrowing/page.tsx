@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import { RocketIcon } from "lucide-react";
 
-export default function MultiplyPage() {
+export default function BorrowingPage() {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -73,14 +73,14 @@ export default function MultiplyPage() {
                 <Image src="/logo/rigen.svg" alt="rigen logo" width={100} height={100} className="object-contain" />
               </motion.div>
               <motion.h1 className="h-16 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-center text-4xl font-bold tracking-tight text-transparent sm:text-6xl">
-                Multiply Coming Soon
+                Borrowing Coming Soon
               </motion.h1>
             </motion.div>
 
             {/* Description */}
             <motion.div variants={itemVariants} className="w-full max-w-2xl space-y-4 text-center">
               <p className="text-xl leading-relaxed sm:text-2xl">
-                Leverage your positions with our advanced multiply feature
+                Our advanced borrowing features are under development
               </p>
               <motion.div
                 className="flex items-center justify-center gap-2 text-lg"
@@ -93,7 +93,7 @@ export default function MultiplyPage() {
                   },
                 }}
               >
-                <Sparkles className="h-6 w-6 animate-pulse" />
+                <RocketIcon className="h-6 w-6 animate-pulse" />
                 <span>Launching Soon</span>
               </motion.div>
             </motion.div>
@@ -105,9 +105,9 @@ export default function MultiplyPage() {
                 whileHover="hover"
                 className="flex flex-col items-center rounded-xl border border-white/10 bg-card/30 p-8 text-center backdrop-blur-md"
               >
-                <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Leverage Trading</h3>
+                <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Flexible Borrowing</h3>
                 <p className="text-lg leading-relaxed text-submerged sm:text-xl">
-                  Amplify your trading potential with up to 10x leverage
+                  Borrow against your crypto assets with competitive interest rates
                 </p>
               </motion.div>
               <motion.div
@@ -115,9 +115,9 @@ export default function MultiplyPage() {
                 whileHover="hover"
                 className="flex flex-col items-center rounded-xl border border-white/10 bg-card/30 p-8 text-center backdrop-blur-md"
               >
-                <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Risk Management</h3>
+                <h3 className="mb-4 text-2xl font-semibold sm:text-3xl">Smart Collateral</h3>
                 <p className="text-lg leading-relaxed text-submerged sm:text-xl">
-                  Advanced tools to help you manage your leveraged positions
+                  Optimize your collateral usage with our advanced risk management system
                 </p>
               </motion.div>
             </motion.div>

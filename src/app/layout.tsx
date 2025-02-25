@@ -3,8 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/shared/ui/toaster";
 import { Providers } from "@/providers";
-import { Header } from "@/components/shared/layout/header";
 import { Metadata, Viewport } from "next";
+import { VideoBackground } from "@/components/shared/custom/video-background";
 
 // Add Inter font configuration
 const inter = Inter({
@@ -94,13 +94,11 @@ export default function RootLayout({
         className={`${mono_dm.variable} ${outfit.variable} fcol relative min-h-screen antialiased`}
         suppressHydrationWarning
       >
+        <VideoBackground isBlur={true} />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           <Providers>
-            <Header />
             <main className="flex-grow">{children}</main>
-            {/* <Footer /> */}
             <Toaster />
-            {/* <Modal /> */}
           </Providers>
         </ThemeProvider>
       </body>

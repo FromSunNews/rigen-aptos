@@ -67,8 +67,7 @@ export function Header() {
       {/* Gradient blur background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/20" />
-        <div className="absolute inset-0 bg-[#0E0C15]/10 backdrop-blur-md backdrop-saturate-150" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5" />
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-md backdrop-saturate-150" />
       </div>
 
       <nav className="frow h-[var(--header-height)] w-full items-center justify-between border-b border-white/[0.02] px-2 md:px-10">

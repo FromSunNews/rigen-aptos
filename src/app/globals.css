@@ -4,44 +4,41 @@
 
 @layer base {
   :root {
-    /* Colors */
-    --background: 222 47% 11%; /* Dark blue background */
-    --foreground: 0 0% 100%; /* White text */
-    --card: 217 47% 15%; /* Card background */
-    --card-foreground: 0 0% 100%;
-    --popover: 217 47% 11%;
-    --popover-foreground: 0 0% 100%;
-
-    /* Main brand colors */
-    --primary: 262 100% 73%; /* Purple */
+    --background: 199 38% 100%;
+    --foreground: 199 76% 5%;
+    --muted: 0 20% 87%;
+    --muted-foreground: 0 4% 40%;
+    --popover: 199 38% 100%;
+    --popover-foreground: 199 76% 5%;
+    --card: 199 38% 100%;
+    --card-foreground: 199 76% 5%;
+    --border: 199 11% 91%;
+    --input: 199 11% 91%;
+    --primary: 199 98% 48%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 199 98% 48%; /* Bright blue */
-    --secondary-foreground: 0 0% 100%;
-
-    /* UI Elements */
-    --muted: 217 38% 15%;
-    --muted-foreground: 215 8% 70%;
-    --accent: 262 100% 73%; /* Purple accent */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --secondary: 0 0% 84%;
+    --secondary-foreground: 0 0% 24%;
+    --accent: 0 0% 84%;
+    --accent-foreground: 0 0% 24%;
+    --destructive: 22 100% 43%;
     --destructive-foreground: 0 0% 100%;
-    --border: 217 47% 15%;
-    --input: 217 47% 15%;
-    --ring: 262 100% 73%; /* Purple ring */
-    --radius: 1rem;
+    --ring: 199 98% 48%;
+    --chart-1: 199 98% 48%;
+    --chart-2: 0 0% 84%;
+    --chart-3: 0 0% 84%;
+    --chart-4: 0 0% 87%;
+    --chart-5: 199 101% 48%;
+    --radius: 0.5rem;
 
-    /* Gradient backgrounds */
-    --background-gradient: linear-gradient(135deg, hsl(217 47% 15%) 0%, hsl(222 47% 11%) 50%, hsl(230 47% 15%) 100%);
-
-    /* Card gradient */
-    --card-gradient: linear-gradient(160deg, hsla(217, 47%, 15%, 0.9) 0%, hsla(222, 47%, 11%, 0.8) 100%);
-
-    /* Button gradient */
-    --button-gradient: linear-gradient(
-      90deg,
-      hsl(262 100% 73%) 0%,
-      /* Purple */ hsl(199 98% 48%) 100% /* Bright blue */
-    );
+    /* Thêm các biến khác từ theme cũ */
+    --third: 199 98% 48%;
+    --third-foreground: 199 98% 48%;
+    --embossed: 0 0% 100%;
+    --submerged: 0 0% 75%;
+    --tab-bg: 199 38% 95%;
+    --tab-hover: 199 38% 90%;
+    --tab-active: 199 98% 48%;
+    --tab-active-text: 0 0% 100%;
 
     /* height of notify header */
     --notify-height: 28px;
@@ -50,46 +47,53 @@
     /* margin top of main content */
     --main-content-mt: calc(var(--header-height) + var(--notify-height));
 
-    /* Tab colors */
-    --third: 199 98% 48%; /* Light blue for active tab */
-    --tab-bg: 222 47% 11%; /* Darker background */
-    --tab-hover: 217 47% 20%; /* Hover state */
-    --tab-active: 262 100% 73%; /* Active indicator */
-    --tab-active-text: 0 0% 100%; /* Active text color */
-    --primary: 262 100% 73%; /* Purple for active indicator */
+    /* Gradient backgrounds */
+    --background-gradient: linear-gradient(135deg, hsl(199 38% 100%) 0%, hsl(199 38% 95%) 50%, hsl(199 38% 100%) 100%);
+
+    /* Card gradient */
+    --card-gradient: linear-gradient(160deg, hsla(199, 38%, 100%, 0.9) 0%, hsla(199, 38%, 95%, 0.8) 100%);
+
+    /* Button gradient */
+    --button-gradient: linear-gradient(90deg, hsl(199 98% 48%) 0%, hsl(210 98% 51%) 100%);
+
+    /* Boosted gradient */
+    --boosted: linear-gradient(91deg, #3a9eff -5.07%, #00c2ff 27.64%, #00d2ff 53.21%, #10f 81.76%, #5aafff 113.87%);
   }
 
   .dark {
-    /* Dark theme values - using same colors since design is dark by default */
-    --background: 222 47% 11%;
-    --foreground: 0 0% 100%;
-    --card: 217 47% 15%;
-    --card-foreground: 0 0% 100%;
-    --popover: 217 47% 11%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 262 100% 73%;
+    --background: 199 42% 4%;
+    --foreground: 199 27% 98%;
+    --muted: 199 20% 13%;
+    --muted-foreground: 199 4% 60%;
+    --popover: 199 42% 4%;
+    --popover-foreground: 199 27% 98%;
+    --card: 199 42% 4%;
+    --card-foreground: 199 27% 98%;
+    --border: 199 11% 13%;
+    --input: 199 11% 13%;
+    --primary: 199 98% 48%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 199 98% 48%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 217 38% 15%;
-    --muted-foreground: 215 8% 70%;
-    --accent: 262 100% 73%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 217 47% 15%;
-    --input: 217 47% 15%;
-    --ring: 262 100% 73%;
-    --embossed: 0 0% 100%;
-    --submerged: 0 0% 67%;
-    --chart-1: 208 100% 66%;
-    --chart-2: 208 4% 15%;
-    --chart-3: 208 12% 23%;
-    --chart-4: 208 4% 18%;
-    --chart-5: 208 103% 66%;
+    --secondary: 199 18% 13%;
+    --secondary-foreground: 199 18% 73%;
+    --accent: 199 18% 13%;
+    --accent-foreground: 199 18% 73%;
+    --destructive: 22 100% 49%;
+    --destructive-foreground: 0 0% 0%;
+    --ring: 199 98% 48%;
+    --chart-1: 199 98% 48%;
+    --chart-2: 199 18% 13%;
+    --chart-3: 199 18% 13%;
+    --chart-4: 199 18% 16%;
+    --chart-5: 199 101% 48%;
+
+    /* Thêm các biến khác từ theme cũ */
     --third: 199 98% 48%;
-    --tab-bg: 217 47% 15% / 0.5;
-    --tab-hover: 217 47% 20%;
+    --third-foreground: 199 98% 48%;
+    --embossed: 199 27% 98%;
+    --submerged: 199 4% 80%;
+    --tab-bg: 199 20% 8%;
+    --tab-hover: 199 20% 10%;
+    --tab-active: 199 98% 48%;
     --tab-active-text: 0 0% 100%;
   }
 }
@@ -100,42 +104,16 @@
   }
   body {
     @apply text-foreground;
-    background-color: hsl(264, 71%, 1%);
-    background-image: url("/background/background.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: hsl(199, 38%, 100%); /* Fallback color - light mode */
     font-family: var(--font-outfit);
     font-weight: 400;
     font-size: 14px;
+    min-height: 100vh;
   }
-}
 
-/* Card styling */
-.card {
-  background: var(--card-gradient);
-  backdrop-filter: blur(10px);
-  border: 1px solid hsla(201, 47%, 25%, 0.5);
-  border-radius: var(--radius);
-}
-
-/* Button styling */
-.button-gradient {
-  background: var(--button-gradient);
-  color: white;
-  border-radius: 0.5rem;
-}
-
-.bg-boosted {
-  background: var(--boosted);
-}
-
-.text-boosted {
-  background: linear-gradient(91deg, #ff3a3c -5.07%, #f6ff00 27.64%, #00ff2f 53.21%, #10f 81.76%, #fc5aff 113.87%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  .dark body {
+    background-color: hsl(199, 42%, 4%); /* Fallback color - dark mode */
+  }
 }
 
 .f1 {

@@ -2,6 +2,7 @@ import * as React from "react";
 import { cn } from "@/libs/utils/taildwind";
 import { Skeleton } from "@/components/shared/ui/skeleton";
 import NextImage from "next/image";
+import { Typography } from "./typography";
 
 interface ImageProps {
   fallbackSrc?: string;
@@ -11,6 +12,7 @@ interface ImageProps {
   alt: string;
   width?: number;
   height?: number;
+  sphereEffect?: boolean;
 }
 
 const COLORS = [
@@ -25,7 +27,20 @@ const COLORS = [
 ];
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, fallbackSrc = "", fallbackName = "", alt = "image", src, width, height, ...props }, ref) => {
+  (
+    {
+      className,
+      fallbackSrc = "",
+      fallbackName = "",
+      alt = "image",
+      src,
+      width,
+      height,
+      sphereEffect = false,
+      ...props
+    },
+    ref
+  ) => {
     const [imgSrc, setImgSrc] = React.useState<string | null>(() => src);
     const [isLoading, setIsLoading] = React.useState(() => !!src);
     const [showFallbackLetter, setShowFallbackLetter] = React.useState(() => !src);
@@ -68,33 +83,83 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
           className={cn(
             "flex items-center justify-center text-2xl font-medium",
             COLORS[colorIndex].bg,
-            COLORS[colorIndex].text,
+            sphereEffect && "relative overflow-hidden rounded-full shadow-lg",
             className
           )}
-          style={{ width, height }}
+          style={{
+            width,
+            height,
+            ...(sphereEffect && {
+              background: `radial-gradient(circle at 30% 30%, 
+                rgba(255,255,255,1) 0%, 
+                ${COLORS[colorIndex].bg.replace("bg-", "")} 40%, 
+                rgba(0,0,0,0.5) 100%)`,
+              boxShadow: "inset 0 0 15px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.45)",
+            }),
+          }}
         >
-          {fallbackName.charAt(0).toUpperCase()}
+          <Typography className={cn(COLORS[colorIndex].text, "text-2xl font-medium")}>
+            {fallbackName.charAt(0).toUpperCase()}
+          </Typography>
+          {sphereEffect && (
+            <div
+              className="absolute left-0 top-0 h-1/3 w-1/3 rounded-full opacity-70"
+              style={{
+                background: "radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, transparent 80%)",
+                transform: "translate(40%, 40%)",
+              }}
+            />
+          )}
         </div>
       ),
-      [fallbackName, width, height, className, colorIndex]
+      [fallbackName, width, height, className, colorIndex, sphereEffect]
     );
 
     return (
-      <div className="relative">
-        {isLoading && <Skeleton className={cn("absolute inset-0 bg-third", className)} />}
+      <div className={cn("relative", sphereEffect && "overflow-hidden rounded-full")}>
+        {isLoading && (
+          <Skeleton className={cn("absolute inset-0 bg-third", sphereEffect && "rounded-full", className)} />
+        )}
         {showFallbackLetter ? (
           fallbackElement
         ) : (
-          <NextImage
-            className={cn("transition-all", isLoading && "invisible", className)}
-            src={imgSrc || ""}
-            alt={alt}
-            width={width}
-            height={height}
-            onError={handleError}
-            onLoad={handleLoad}
-            {...props}
-          />
+          <div className={cn(sphereEffect && "sphere-container overflow-hidden rounded-full", "relative")}>
+            <NextImage
+              className={cn(
+                "transition-all",
+                isLoading && "invisible",
+                sphereEffect && "rounded-full object-cover",
+                className
+              )}
+              src={imgSrc || ""}
+              alt={alt}
+              width={width}
+              height={height}
+              onError={handleError}
+              onLoad={handleLoad}
+              {...props}
+            />
+            {sphereEffect && !isLoading && !showFallbackLetter && (
+              <div
+                className="pointer-events-none absolute left-0 top-0 h-full w-full"
+                style={{
+                  background: `radial-gradient(circle at 30% 30%, 
+                    rgba(255,255,255,0.3) 0%, 
+                    rgba(255,255,255,0.05) 50%, 
+                    rgba(0,0,0,0.2) 100%)`,
+                  boxShadow: "inset 0 0 15px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div
+                  className="absolute left-0 top-0 h-1/3 w-1/3 rounded-full opacity-70"
+                  style={{
+                    background: "radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, transparent 80%)",
+                    transform: "translate(40%, 40%)",
+                  }}
+                />
+              </div>
+            )}
+          </div>
         )}
       </div>
     );

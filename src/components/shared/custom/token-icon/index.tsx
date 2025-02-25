@@ -33,6 +33,14 @@ export const TokenIcon: FC<TokenIconProps> = ({
   const iconPath = isPlatform ? PLATFORM_ICONS[normalizedSymbol] : TOKEN_ICONS[normalizedSymbol];
 
   return (
-    <Image src={iconPath || null} fallbackName={symbol} alt={symbol} width={size} height={size} className={className} />
+    <Image
+      sphereEffect={true}
+      src={iconPath || null}
+      fallbackName={symbol}
+      alt={symbol}
+      width={size}
+      height={size}
+      className={className}
+    />
   );
 };
