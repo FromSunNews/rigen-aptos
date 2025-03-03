@@ -6,9 +6,17 @@ import {
   GetReserveConfigurationDataFuncAddr,
   GetReserveDataFuncAddr,
   GetReserveTokensAddressesFuncAddr,
+  GetUserAccountDataFuncAddr,
+  GetUserReserveDataFuncAddr,
+  PoolGetReserveDataFuncAddr,
+  PoolGetReservesListFuncAddr,
+  PoolGetUserConfigurationFuncAddr,
   UiPoolDataProviderGetReservesListFuncAddr,
   UiPoolDataProviderGetUserReservesDataFuncAddr,
   UnderlyingBalanceOfFuncAddr,
+  UnderlyingDecimalsFuncAddr,
+  UnderlyingGetMetadataBySymbolFuncAddr,
+  UnderlyingNameFuncAddr,
   UnderlyingSymbolFuncAddr,
   VariableScaledTotalSupplyFuncAddr,
 } from "@/clients/configs/move-functions";
@@ -18,6 +26,55 @@ import "@/clients/helper/wadraymath";
 import { filterFieldsObjectArray } from "@/libs/utils/function";
 import { EntryLendingReserveData, UILendingReserveData } from "@/clients/types/view/pool/lending";
 import { PositionReserveData, UIPostionReserveData } from "@/clients/types/view/pool/position";
+
+export type UserConfigurationMap = {
+  data: number;
+};
+
+export type ReserveData = {
+  /// stores the reserve configuration
+  configuration: { data: number };
+  /// the liquidity index. Expressed in ray
+  liquidity_index: number;
+  /// the current supply rate. Expressed in ray
+  current_liquidity_rate: number;
+  /// variable borrow index. Expressed in ray
+  variable_borrow_index: number;
+  /// the current variable borrow rate. Expressed in ray
+  current_variable_borrow_rate: number;
+  /// the current stable borrow rate. Expressed in ray
+  current_stable_borrow_rate: number;
+  /// timestamp of last update (u40 -> u64)
+  last_update_timestamp: number;
+  /// the id of the reserve. Represents the position in the list of the active reserves
+  id: number;
+  /// aToken address
+  a_token_address: string;
+  /// stableDebtToken address
+  stable_debt_token_address: string;
+  /// variableDebtToken address
+  variable_debt_token_address: string;
+  /// address of the interest rate strategy
+  interest_rate_strategy_address: string;
+  /// the current treasury balance, scaled
+  accrued_to_treasury: number;
+  /// the outstanding unbacked aTokens minted through the bridging feature
+  unbacked: number;
+  /// the outstanding debt borrowed against this asset in isolation mode
+  isolation_mode_total_debt: number;
+};
+
+export interface Metadata {
+  inner: string;
+}
+
+export interface UserReserveData {
+  currentATokenBalance: BigNumber;
+  currentVariableDebt: BigNumber;
+  scaledVariableDebt: BigNumber;
+  liquidityRate: BigNumber;
+  usageAsCollateralEnabled: boolean;
+}
 
 export class PoolService extends AptosBaseService {
   public async getReserveDataLending(reserve: AccountAddress): Promise<EntryLendingReserveData> {
@@ -213,5 +270,74 @@ export class PoolService extends AptosBaseService {
     return fields.length === 0
       ? reservesData
       : (filterFieldsObjectArray(reservesData, fields) as UIPostionReserveData[]);
+  }
+
+  /// Returns all user account data
+  public async getUserAccountData(user: AccountAddress): Promise<{
+    totalCollateralBase: BigNumber;
+    totalDebtBase: BigNumber;
+    availableBorrowsBase: BigNumber;
+    currentLiquidationThreshold: BigNumber;
+    ltv: BigNumber;
+    healthFactor: BigNumber;
+  }> {
+    const [totalCollateralBase, totalDebtBase, availableBorrowsBase, currentLiquidationThreshold, ltv, healthFactor] = (
+      await this.callViewMethod(GetUserAccountDataFuncAddr, [user])
+    ).map(mapToBN);
+    return { totalCollateralBase, totalDebtBase, availableBorrowsBase, currentLiquidationThreshold, ltv, healthFactor };
+  }
+
+  public async getReservesList(): Promise<Array<AccountAddress>> {
+    const resp = ((await this.callViewMethod(PoolGetReservesListFuncAddr, [])).at(0) as Array<any>).map((item) =>
+      AccountAddress.fromString(item as string)
+    );
+    return resp;
+  }
+
+  public async getUserConfiguration(account: AccountAddress): Promise<UserConfigurationMap> {
+    const [resp] = await this.callViewMethod(PoolGetUserConfigurationFuncAddr, [account]);
+    return resp as UserConfigurationMap;
+  }
+
+  public async getReserveData(asset: AccountAddress): Promise<ReserveData> {
+    const [resp] = await this.callViewMethod(PoolGetReserveDataFuncAddr, [asset]);
+    console.log("resp", resp);
+    return resp as ReserveData;
+  }
+
+  public async getMetadataBySymbol(symbol: string): Promise<AccountAddress> {
+    const [resp] = await this.callViewMethod(UnderlyingGetMetadataBySymbolFuncAddr, [symbol]);
+    console.log("resp", resp);
+    return AccountAddress.fromString((resp as Metadata).inner);
+  }
+
+  // Get the name of the fungible asset from the metadata object.
+  public async name(metadataAddress: AccountAddress): Promise<string> {
+    const [resp] = await this.callViewMethod(UnderlyingNameFuncAddr, [metadataAddress]);
+    return resp as string;
+  }
+
+  // Get the symbol of the fungible asset from the metadata object.
+  public async symbol(metadataAddress: AccountAddress): Promise<string> {
+    const [resp] = await this.callViewMethod(UnderlyingSymbolFuncAddr, [metadataAddress]);
+    return resp as string;
+  }
+
+  // Get the decimals from the metadata object.
+  public async decimals(metadataAddress: AccountAddress): Promise<BigNumber> {
+    const [resp] = (await this.callViewMethod(UnderlyingDecimalsFuncAddr, [metadataAddress])).map(mapToBN);
+    return resp;
+  }
+
+  public async getUserReserveData(asset: AccountAddress, user: AccountAddress): Promise<UserReserveData> {
+    const [currentATokenBalance, currentVariableDebt, scaledVariableDebt, liquidityRate, usageAsCollateralEnabled] =
+      await this.callViewMethod(GetUserReserveDataFuncAddr, [asset, user]);
+    return {
+      currentATokenBalance: BigNumber.from(currentATokenBalance),
+      currentVariableDebt: BigNumber.from(currentVariableDebt),
+      scaledVariableDebt: BigNumber.from(scaledVariableDebt),
+      liquidityRate: BigNumber.from(liquidityRate),
+      usageAsCollateralEnabled: usageAsCollateralEnabled as boolean,
+    } as UserReserveData;
   }
 }

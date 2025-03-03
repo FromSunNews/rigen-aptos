@@ -206,10 +206,10 @@ function PositionDialogContent({
                 <div className="relative flex items-center justify-between">
                   <div className="flex flex-1 flex-col gap-1">
                     <Input
-                      type="number"
+                      // type="number"
                       value={depositAmount}
                       onChange={handleDepositAmountChange}
-                      className="h-auto w-full border-none bg-transparent p-0 text-3xl font-medium focus-visible:ring-0 focus-visible:ring-offset-0"
+                      className="h-auto w-full border-none bg-transparent p-0 !text-3xl font-medium focus-visible:ring-0 focus-visible:ring-offset-0"
                       placeholder="0.00"
                     />
                     <Typography color="submerged" className="text-sm">
@@ -326,10 +326,10 @@ function PositionDialogContent({
                 <div className="relative flex items-center justify-between">
                   <div className="flex flex-1 flex-col gap-1">
                     <Input
-                      type="number"
+                      // type="number"
                       value={withdrawAmount}
                       onChange={handleWithdrawAmountChange}
-                      className="h-auto w-full border-none bg-transparent p-0 text-3xl font-medium focus-visible:ring-0 focus-visible:ring-offset-0"
+                      className="h-auto w-full border-none bg-transparent p-0 !text-3xl font-medium focus-visible:ring-0 focus-visible:ring-offset-0"
                       placeholder="0.00"
                     />
                     <Typography color="submerged" className="text-sm">

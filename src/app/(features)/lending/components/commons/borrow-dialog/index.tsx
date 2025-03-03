@@ -12,9 +12,9 @@ import { AccountAddress } from "@aptos-labs/ts-sdk";
 import { useBoundStore } from "@/store";
 
 import { UILendingReserveData } from "@/clients/types/view/pool/lending";
-import { useDeposit } from "@/hooks/contracts/lending-page/entry/use-deposit";
+import { useBorrow } from "@/hooks/contracts/lending-page/entry/use-borrow";
 
-function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onClose: () => void }) {
+function BorrowContent({ row, onClose }: { row: Row<UILendingReserveData>; onClose: () => void }) {
   const { account } = useWallet();
 
   const data = {
@@ -22,54 +22,56 @@ function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onCl
     totalSupply: row.original.totalLiquidity,
     totalBorrow: row.original.totalVariableDebt,
     walletBalance: row.original.balance,
-    apy: row.original.liquidityRate,
+    apy: (row.original as any).variableBorrowRate || 0,
     decimals: row.original.decimals,
     symbol: row.original.symbol,
     address: AccountAddress.fromString(account?.address || "0x0"),
     referralCode: 0,
     availableAmount: row.original.totalLiquidity - row.original.totalVariableDebt,
+    ltv: (row.original as any).baseLTVasCollateral || 0,
+    liquidationThreshold: (row.original as any).reserveLiquidationThreshold || 0,
   };
 
-  const [depositAmount, setDepositAmount] = React.useState<string>(
+  const [borrowAmount, setBorrowAmount] = React.useState<string>(
     ((data.availableAmount * 25) / 100).toFixed(data.decimals)
   );
-  const [depositPercent, setDepositPercent] = React.useState<number>(25);
-  const { mutate: depositMutation, isPending: isDepositPending } = useDeposit();
-  const [activeTab, setActiveTab] = React.useState<"deposit" | "withdraw">("deposit");
+  const [borrowPercent, setBorrowPercent] = React.useState<number>(25);
+  const { mutate: borrowMutation, isPending: isBorrowPending } = useBorrow();
 
   const handlePercentChange = (percent: number) => {
-    setDepositPercent(percent);
+    setBorrowPercent(percent);
     const amount = (data.availableAmount * percent) / 100;
-    setDepositAmount(amount.toFixed(data.decimals));
+    setBorrowAmount(amount.toFixed(data.decimals));
   };
 
   const handleMaxClick = () => {
-    setDepositPercent(100);
+    setBorrowPercent(100);
     const amount = data.availableAmount;
-    setDepositAmount(amount.toFixed(data.decimals));
+    setBorrowAmount(amount.toFixed(data.decimals));
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setDepositAmount(value);
+    setBorrowAmount(value);
     const percent = (Number(value) / data.availableAmount) * 100;
-    setDepositPercent(Math.min(100, Math.round(percent)));
+    setBorrowPercent(Math.min(100, Math.round(percent)));
   };
 
-  const handleDeposit = () => {
-    depositMutation({
+  const handleBorrow = () => {
+    borrowMutation({
       asset: data.asset,
-      amount: depositAmount,
+      amount: borrowAmount,
       decimals: data.decimals,
-      address: data.address,
+      interestRateMode: 2, // Variable rate
       referralCode: data.referralCode,
+      onBehalfOf: data.address,
       onClose: onClose,
     });
   };
 
   return (
     <div className="flex h-full flex-col">
-      {/* Header with token info and tabs */}
+      {/* Header with token info */}
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-5">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-primary/10 shadow-lg shadow-primary/10 backdrop-blur-sm">
@@ -81,22 +83,6 @@ function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onCl
             </Typography>
           </div>
         </div>
-
-        {/* Tabs */}
-        {/* <div className="flex rounded-full bg-white/5 p-1 backdrop-blur-sm border border-white/10">
-          <button 
-            className={`px-8 py-2.5 text-sm font-medium rounded-full transition-all ${activeTab === 'deposit' ? 'bg-primary text-white shadow-md' : 'text-submerged hover:text-white'}`}
-            onClick={() => setActiveTab('deposit')}
-          >
-            Deposit
-          </button>
-          <button 
-            className={`px-8 py-2.5 text-sm font-medium rounded-full transition-all ${activeTab === 'withdraw' ? 'bg-primary text-white shadow-md' : 'text-submerged hover:text-white'}`}
-            onClick={() => setActiveTab('withdraw')}
-          >
-            Withdraw
-          </button>
-        </div> */}
       </div>
 
       {/* Main content */}
@@ -105,28 +91,28 @@ function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onCl
         <div className="grid grid-cols-2 gap-8">
           <div className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
             <Typography color="submerged" className="mb-2 text-sm">
-              Your Assets
+              Available to Borrow
             </Typography>
-            <Typography className="text-3xl font-bold">${(data.walletBalance * 1).toFixed(2)}</Typography>
+            <Typography className="text-3xl font-bold">${(data.availableAmount * 1).toFixed(2)}</Typography>
             <Typography color="submerged" className="mt-1 text-sm">
-              {data.walletBalance.toFixed(2)} {data.symbol}
+              {data.availableAmount.toFixed(2)} {data.symbol}
             </Typography>
           </div>
           <div className="flex flex-col rounded-2xl border border-primary/10 bg-gradient-to-br from-primary/20 to-primary/5 p-5 backdrop-blur-sm">
             <Typography color="submerged" className="mb-2 text-sm">
-              APR
+              Borrow APR
             </Typography>
             <Typography className="text-3xl font-bold text-primary">{data.apy.toFixed(2)}%</Typography>
             <Typography color="submerged" className="mt-1 text-sm">
-              Annual Percentage Rate
+              Variable Interest Rate
             </Typography>
           </div>
         </div>
 
-        {/* Deposit input */}
+        {/* Borrow input */}
         <div className="flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <Typography className="text-lg font-medium">Deposit</Typography>
+            <Typography className="text-lg font-medium">Borrow Amount</Typography>
             <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5">
               <Typography color="submerged" className="text-xs">
                 Available:
@@ -144,14 +130,13 @@ function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onCl
             <div className="relative flex items-center justify-between">
               <div className="flex flex-1 flex-col gap-1">
                 <Input
-                  // type="number"
-                  value={depositAmount}
+                  value={borrowAmount}
                   onChange={handleAmountChange}
                   className="h-auto w-full border-none bg-transparent p-0 !text-3xl font-medium focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="0.00"
                 />
                 <Typography color="submerged" className="text-sm">
-                  ${(Number(depositAmount) * 1).toFixed(2)}
+                  ${(Number(borrowAmount) * 1).toFixed(2)}
                 </Typography>
               </div>
 
@@ -175,9 +160,9 @@ function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onCl
           {[25, 50, 75, 100].map((percent) => (
             <Button
               key={percent}
-              variant={depositPercent === percent ? "third" : "outline"}
+              variant={borrowPercent === percent ? "third" : "outline"}
               size="sm"
-              className={`h-10 w-full border-white/20 text-sm font-medium ${depositPercent === percent ? "shadow-md shadow-primary/20" : "hover:bg-white/10"}`}
+              className={`h-10 w-full border-white/20 text-sm font-medium ${borrowPercent === percent ? "shadow-md shadow-primary/20" : "hover:bg-white/10"}`}
               onClick={() => handlePercentChange(percent)}
             >
               {percent}%
@@ -185,47 +170,47 @@ function DepositContent({ row, onClose }: { row: Row<UILendingReserveData>; onCl
           ))}
         </div>
 
-        {/* Pool info */}
+        {/* Loan info */}
         <div className="mt-4 grid grid-cols-2 gap-6">
           <div className="flex flex-col rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
             <Typography color="submerged" className="mb-1 text-sm">
-              Vault Total
+              Loan to Value
             </Typography>
             <Typography className="text-xl font-medium">
-              ${data.totalSupply.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              {data.ltv.toLocaleString(undefined, { maximumFractionDigits: 2 })}%
             </Typography>
             <Typography color="submerged" className="mt-1 text-xs">
-              {data.totalSupply.toLocaleString(undefined, { maximumFractionDigits: 2 })} {data.symbol}
+              Maximum borrowing power
             </Typography>
           </div>
           <div className="flex flex-col rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
             <Typography color="submerged" className="mb-1 text-sm">
-              Layer Total
+              Liquidation Threshold
             </Typography>
             <Typography className="text-xl font-medium">
-              ${(data.totalSupply * 1.05).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+              {data.liquidationThreshold.toLocaleString(undefined, { maximumFractionDigits: 2 })}%
             </Typography>
             <Typography color="submerged" className="mt-1 text-xs">
-              {(data.totalSupply * 1.05).toLocaleString(undefined, { maximumFractionDigits: 2 })} {data.symbol}
+              Position health factor limit
             </Typography>
           </div>
         </div>
 
-        {/* Deposit button */}
+        {/* Borrow button */}
         <Button
-          disabled={isDepositPending || !Number(depositAmount)}
-          onClick={handleDeposit}
+          disabled={isBorrowPending || !Number(borrowAmount)}
+          onClick={handleBorrow}
           className="mt-4 h-14 w-full bg-gradient-to-r from-primary to-primary/80 text-base font-medium uppercase hover:from-primary/90 hover:to-primary/70"
           ripple={true}
         >
-          {isDepositPending ? "Depositing..." : "Deposit"}
+          {isBorrowPending ? "Borrowing..." : "Borrow"}
         </Button>
       </div>
     </div>
   );
 }
 
-export default function DepositDialog({ row }: { row: Row<UILendingReserveData> }) {
+export default function BorrowDialog({ row }: { row: Row<UILendingReserveData> }) {
   const { connected } = useWallet();
   const [open, setOpen] = React.useState<boolean>(false);
   const { openWalletModal } = useBoundStore();
@@ -241,17 +226,17 @@ export default function DepositDialog({ row }: { row: Row<UILendingReserveData> 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="!h-[48px] w-full" ripple={true}>
+        <Button className="!h-[48px] w-full" ripple={true} variant="outline">
           <Typography variant="h2" className="text-base font-bold uppercase">
-            Deposit
+            Borrow
           </Typography>
         </Button>
       </DialogTrigger>
       <DialogContent
         className="border-white/10 bg-gradient-to-b from-[#111827]/95 to-[#0F172A]/95 p-8 sm:max-w-[580px] dark:from-[#111827]/95 dark:to-[#0F172A]/95"
-        title={`Deposit ${row.original.symbol}`}
+        title={`Borrow ${row.original.symbol}`}
       >
-        {open && <DepositContent row={row} onClose={() => setOpen(false)} />}
+        {open && <BorrowContent row={row} onClose={() => setOpen(false)} />}
       </DialogContent>
     </Dialog>
   );

@@ -6,9 +6,16 @@ import { TrendingUp, Users, Shield, Clock } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shared/ui/tooltip";
 import { UILendingReserveData } from "@/clients/types/view/pool/lending";
 import { Row } from "@tanstack/react-table";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { TokenIcon } from "@/components/shared/custom/token-icon";
-import DepositDialog from "../deposit-dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/shared/ui/dialog";
+import { Button } from "@/components/shared/ui/button";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useBoundStore } from "@/store";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/shared/ui/tabs";
+import DepositContent from "@/app/(features)/lending/components/commons/deposit-dialog/deposit-content";
+import BorrowContent from "@/app/(features)/lending/components/commons/borrow-dialog/borrow-content";
+import RepayContent from "@/app/(features)/lending/components/commons/repay-dialog/repay-content";
 
 interface LendingPoolCardProps {
   token: UILendingReserveData;
@@ -16,7 +23,12 @@ interface LendingPoolCardProps {
 }
 
 export function LendingPoolCard({ token, className }: LendingPoolCardProps) {
-  // Create a Row-like object to pass to DepositDialog
+  const { connected } = useWallet();
+  const { openWalletModal } = useBoundStore();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"deposit" | "borrow" | "repay">("deposit");
+
+  // Create a Row-like object to pass to Dialog content
   const rowData = useMemo(() => {
     return {
       original: token,
@@ -54,6 +66,29 @@ export function LendingPoolCard({ token, className }: LendingPoolCardProps) {
   const totalBorrowed = `$${token.totalVariableDebt.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
   const depositLimit = `$${(token.totalLiquidity * 1.5).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
   const collateralFactor = "80%"; // Assuming this is fixed or not available in token data
+
+  const handleOpenChange = (isOpen: boolean) => {
+    if (!connected && isOpen) {
+      openWalletModal();
+      return;
+    }
+    setDialogOpen(isOpen);
+  };
+
+  const handleOpenDeposit = () => {
+    setActiveTab("deposit");
+    setDialogOpen(true);
+  };
+
+  const handleOpenBorrow = () => {
+    setActiveTab("borrow");
+    setDialogOpen(true);
+  };
+
+  const handleOpenRepay = () => {
+    setActiveTab("repay");
+    setDialogOpen(true);
+  };
 
   return (
     <div className={cn("group relative w-full max-w-[420px]", className)}>
@@ -214,9 +249,79 @@ export function LendingPoolCard({ token, className }: LendingPoolCardProps) {
             </div>
           </div>
 
-          {/* Action Button */}
-          <div className="mt-8">
-            <DepositDialog row={rowData} />
+          {/* Action Buttons */}
+          <div className="mt-8 grid grid-cols-3 gap-3">
+            <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
+              <DialogTrigger asChild>
+                <Button className="!h-[48px] w-full" ripple={true} onClick={handleOpenDeposit}>
+                  <Typography variant="h2" className="text-base font-bold uppercase">
+                    Deposit
+                  </Typography>
+                </Button>
+              </DialogTrigger>
+              <DialogContent
+                className="border-white/10 bg-gradient-to-b from-[#111827]/95 to-[#0F172A]/95 p-8 sm:max-w-[580px] dark:from-[#111827]/95 dark:to-[#0F172A]/95"
+                title={`${token.symbol} Pool`}
+              >
+                {dialogOpen && (
+                  <div className="flex h-full flex-col">
+                    {/* Header with token info and tabs */}
+                    <div className="mb-8 flex items-center justify-between">
+                      <div className="flex items-center gap-5">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-primary/10 shadow-lg shadow-primary/10 backdrop-blur-sm">
+                          <TokenIcon symbol={token.symbol} size={48} className="rounded-full" />
+                        </div>
+                        <div>
+                          <Typography variant="h2" className="text-3xl font-bold">
+                            {token.symbol}
+                          </Typography>
+                        </div>
+                      </div>
+
+                      {/* Tabs */}
+                      <Tabs
+                        value={activeTab}
+                        onValueChange={(value) => setActiveTab(value as "deposit" | "borrow" | "repay")}
+                      >
+                        <TabsList className="border border-white/10 bg-white/5">
+                          <TabsTrigger value="deposit">Deposit</TabsTrigger>
+                          <TabsTrigger value="borrow">Borrow</TabsTrigger>
+                          <TabsTrigger value="repay">Repay</TabsTrigger>
+                        </TabsList>
+                      </Tabs>
+                    </div>
+
+                    {/* Tab Content */}
+                    <Tabs
+                      value={activeTab}
+                      onValueChange={(value) => setActiveTab(value as "deposit" | "borrow" | "repay")}
+                    >
+                      <TabsContent value="deposit" className="mt-0">
+                        <DepositContent row={rowData} onClose={() => setDialogOpen(false)} />
+                      </TabsContent>
+                      <TabsContent value="borrow" className="mt-0">
+                        <BorrowContent row={rowData} onClose={() => setDialogOpen(false)} />
+                      </TabsContent>
+                      <TabsContent value="repay" className="mt-0">
+                        <RepayContent row={rowData} onClose={() => setDialogOpen(false)} />
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                )}
+              </DialogContent>
+            </Dialog>
+
+            <Button className="!h-[48px] w-full" ripple={true} variant="outline" onClick={handleOpenBorrow}>
+              <Typography variant="h2" className="text-base font-bold uppercase">
+                Borrow
+              </Typography>
+            </Button>
+
+            <Button className="!h-[48px] w-full" ripple={true} variant="outline" onClick={handleOpenRepay}>
+              <Typography variant="h2" className="text-base font-bold uppercase">
+                Repay
+              </Typography>
+            </Button>
           </div>
         </div>
 

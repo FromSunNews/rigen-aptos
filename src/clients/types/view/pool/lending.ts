@@ -34,4 +34,11 @@ export const pickUILendingReserveData = [
   "balance",
   "progress",
 ] as const;
-export type UILendingReserveData = PickProperties<EntryLendingReserveData, (typeof pickUILendingReserveData)[number]>;
+export type UILendingReserveData = PickProperties<
+  EntryLendingReserveData,
+  (typeof pickUILendingReserveData)[number]
+> & {
+  variableBorrowRate: number;
+  baseLTVasCollateral: number;
+  reserveLiquidationThreshold: number;
+};
