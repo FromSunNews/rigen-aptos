@@ -35,7 +35,7 @@ export const useLendingReserves = () => {
       [...pickUILendingReserveData]
     );
 
-    updateReserves(reservesData);
+    updateReserves(reservesData as any);
     return reservesData;
   };
 

@@ -225,7 +225,7 @@ export class PoolService extends AptosBaseService {
     return reservesData;
   }
 
-  public async getLendingData(fields: string[]): Promise<UILendingReserveData[]> {
+  public async getLendingData(fields: string[]): Promise<UILendingReserveData[] | EntryLendingReserveData[]> {
     // get the list of reserves from the pool
     const [resp] = await this.callViewMethod(UiPoolDataProviderGetReservesListFuncAddr, []);
 
